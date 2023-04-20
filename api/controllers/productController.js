@@ -1,4 +1,4 @@
-import { createSlug } from "../helper/slugCreate.js";
+import { createSlug } from "../helper/createSlug.js";
 import Product from "../models/Product.js";
 import { unlinkSync } from "fs";
 

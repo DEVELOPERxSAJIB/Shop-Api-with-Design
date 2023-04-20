@@ -13,22 +13,23 @@ import { errorHandle } from "./middlewares/errorHandler.js";
 const app = express();
 dotenv.config();
 
+// envronment variable
+const PORT = process.env.PORT || 9090;
+
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-// set static
-app.use(express.static("api/public"));
 
 // routes
-app.use("/api/v1/product", productRoute);
 app.use("/api/v1/product", productCategoryRoute);
 app.use("/api/v1/product", productBrandRoute);
 app.use("/api/v1/product", productTagRoute);
+app.use("/api/v1/product", productRoute);
 
-// envronment variable
-const PORT = process.env.PORT || 9090;
+// set static
+app.use(express.static("api/public"));
 
 // use error handler
 app.use(errorHandle);

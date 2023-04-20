@@ -1,3 +1,4 @@
+import { createSlug } from "../helper/createSlug.js";
 import Category from "../models/Category.js";
 import { createError } from "../utils/createError.js";
 
@@ -17,10 +18,10 @@ export const getAllProductCategory = async (req, res, next) => {
 // create product category
 export const createProductCategory = async (req, res, next) => {
   try {
-    const { name, slug } = req.body;
+    const { name } = req.body;
     const data = await Category.create({
       name,
-      slug,
+      slug : createSlug(name),
       photo: req.file.filename,
     });
     res.status(200).json({

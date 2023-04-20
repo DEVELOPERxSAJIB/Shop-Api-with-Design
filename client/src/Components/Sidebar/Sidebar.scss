@@ -1,0 +1,79 @@
+.sidebar-area {
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .sidebar-widget {
+    input:focus {
+      box-shadow: none;
+      border-color: transparent;
+    }
+  }
+
+  .sidebar-category {
+    ul {
+      li {
+        font-size: 14px;
+        font-weight: 400;
+        color: #666;
+        padding: 4px 0;
+      }
+    }
+  }
+
+  .sidebar-brands {
+    ul {
+      li {
+        font-size: 14px;
+        font-weight: 400;
+        color: #666;
+        padding: 4px 0;
+      }
+    }
+  }
+
+  .sidebar-tages {
+    ul {
+      margin: 5% 0;
+      a {
+        color: #666;
+        background-color: #fff;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 5px 10px;
+        border-radius: 3px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+    }
+  }
+
+  .sidebar-pricing {
+      .pricing-input {
+          margin: 10px 0;
+        display: flex;
+        gap: 10px;
+      input {
+        border: none;
+        box-shadow: transparent;
+        padding: 10px;
+        border-radius: 7px;
+        width: 30%;
+      }
+      input:focus-visible {
+        box-shadow: none;
+        border-color: transparent;
+      }
+      
+      .pricing-btn {
+        border: none;
+        background-color: rgba(55, 75, 185, 0.1);
+        color: #3749bb;
+        font-weight: 600;
+        padding: 7px 15px !important;
+      }
+    }
+  }
+}

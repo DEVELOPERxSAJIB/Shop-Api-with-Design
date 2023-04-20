@@ -5,6 +5,7 @@ import {
   getAllProductTags,
   getSingleProductTag,
   updateProductTag,
+  updateTagStatus
 } from "../controllers/productTagController.js";
 
 // create router
@@ -16,7 +17,8 @@ router
   .route("/tag/:id")
   .get(getSingleProductTag)
   .delete(deleteProductTag)
-  .put(updateProductTag);
+  .put(updateProductTag)
+  .patch(updateTagStatus)
 
 // export
 export default router;

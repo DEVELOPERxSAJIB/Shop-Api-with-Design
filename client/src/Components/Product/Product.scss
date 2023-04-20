@@ -1,0 +1,108 @@
+
+
+
+.product-item {
+  width: 24%;
+  margin-bottom: 10px;
+
+  .product-card {
+    border: transparent;
+  }
+
+  .product-img {
+    padding: 15px 0;
+    border-bottom: 2px solid #f2f4f8;
+  }
+
+  .title {
+    p {
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    p:hover {
+      color: #ef4a23;
+      text-decoration: underline;
+    }
+  }
+
+  .short-desc {
+    ul {
+      border-bottom: 1px solid #f2f4f8;
+      padding-left: 15px;
+      padding-bottom: 10px;
+      li {
+        color: #666666;
+        list-style: disc;
+        font-size: 12px;
+        font-weight: 400;
+        padding: 5px 0px;
+      }
+    }
+  }
+
+  .product-price {
+    text-align: center;
+    padding-top: 10px;
+
+    .regular {
+      padding-top: 10px;
+      font-size: 17px;
+      color: #ef4a23;
+      line-height: 19px;
+      font-weight: 500;
+      margin-right: 3px;
+    }
+
+    .sale {
+      margin-left: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #666666;
+      text-decoration: line-through;
+    }
+  }
+
+  .product-btn {
+    Button.buy-now {
+      width: 100%;
+      margin-bottom: 7px;
+      margin-top: 5px;
+      background-color: rgba(55, 75, 185, 0.1);
+      border: rgba(55, 75, 185, 0.1);
+      font-size: 13px;
+      font-weight: 600;
+      color: #3749bb;
+      margin-left: 5px;
+      .buy-icon {
+        margin-right: 5px;
+        font-size: 17px;
+      }
+    }
+    Button.buy-now:hover {
+      background-color: #3749bb;
+      color: #fff;
+    }
+
+    Button.view-btn {
+      width: 100%;
+      background-color: transparent;
+      border: transparent;
+      font-size: 13px;
+      font-weight: 400;
+      color: #666;
+      margin-left: 5px;
+      .view-icon {
+        margin-right: 5px;
+        font-size: 17px;
+      }
+    }
+
+    Button.view-btn:hover {
+        background-color: #F1F3F5;
+        color: #111;
+    }
+  }
+}
