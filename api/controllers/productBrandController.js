@@ -64,13 +64,13 @@ export const deleteBrand = async (req, res, next) => {
 export const updateBrand = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, slug, photo } = req.body;
+    const { name, photo } = req.body;
     const brand = await Brand.findByIdAndUpdate(
       id,
       {
         name,
-        slug,
-        photo
+        slug: createSlug(name),
+        photo: req.file ? req.file.filename : photo
       },
       { new: true }
     );

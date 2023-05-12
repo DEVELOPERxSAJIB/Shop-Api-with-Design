@@ -1,6 +1,13 @@
 import {
+  BRAND_EDIT_FAILED,
+  BRAND_EDIT_SUCCESS,
   BRAND_STATUS_SUCCESS,
+  CATEGORY_CREATE_FAILED,
   CATEGORY_CREATE_SUCCESS,
+  CATEGORY_DELETE_FAILED,
+  CATEGORY_DELETE_SUCCESS,
+  CATEGORY_EDIT_SUCCESS,
+  CATEGORY_STATUS_SUCCESS,
   CREATE_BRAND_FAILED,
   CREATE_BRAND_REQUEST,
   CREATE_BRAND_SUCCESS,
@@ -16,6 +23,8 @@ import {
   GET_CATEGORY_FAILED,
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
+  GET_PRODUCT_PENDING,
+  GET_PRODUCT_SUCCESS,
   GET_TAGS_FAILED,
   GET_TAGS_SUCCESS,
   TAG_STATUS_SUCCESS
@@ -66,6 +75,20 @@ const shopReducer = (state = initState, { type, payload }) => {
         loading: false,
         brands: [],
         error: payload
+      };
+
+    case BRAND_EDIT_SUCCESS:
+      state.brands[state.brands.findIndex((data) => data._id === payload._id)] =
+        payload;
+      return {
+        ...state,
+        brands: [...state.brands]
+      };
+
+    case BRAND_EDIT_FAILED:
+      return {
+        ...state,
+        brands: [...state.brands]
       };
 
     case DELETE_BRAND_REQUEST:
@@ -144,22 +167,72 @@ const shopReducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        categories : payload
+        categories: payload
       };
 
     case GET_CATEGORY_FAILED:
       return {
         ...state,
         loading: false,
-        error : payload
+        error: payload
       };
 
     case CATEGORY_CREATE_SUCCESS:
       return {
         ...state,
         loading: false,
-        categories : [...state.categories, payload]
+        categories: [...state.categories, payload]
       };
+
+    case CATEGORY_CREATE_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: payload
+      };
+
+    case CATEGORY_EDIT_SUCCESS:
+      state.categories[
+        state.categories.findIndex((data) => data._id === payload._id)
+      ] = payload;
+      return {
+        ...state,
+        categories: [...state.categories]
+      };
+
+    case CATEGORY_DELETE_SUCCESS:
+      return {
+        ...state,
+        categories: [...state.categories.filter((data) => data._id !== payload)]
+      };
+
+    case CATEGORY_DELETE_FAILED:
+      return {
+        ...state,
+        error: payload
+      };
+
+    case CATEGORY_STATUS_SUCCESS:
+      state.categories[
+        state.categories.findIndex((data) => data._id === payload._id)
+      ] = payload;
+
+      return {
+        ...state,
+        categories: state.categories
+      };
+
+    case GET_PRODUCT_PENDING:
+      return {
+        ...state,
+        loading : true
+      }
+
+    case GET_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        products : [...payload]
+      }
 
     default:
       return state;

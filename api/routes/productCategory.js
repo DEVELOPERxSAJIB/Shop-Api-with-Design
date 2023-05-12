@@ -5,6 +5,7 @@ import {
   getSingleProductCategory,
   deleteProductCategory,
   updateProductCategory,
+  updateCategoryStatus
 } from "../controllers/productCategoryController.js";
 import { productCategoryMulter } from "../utils/multer.js";
 
@@ -16,7 +17,8 @@ router.get("/category", getAllProductCategory);
 router.post("/category", productCategoryMulter, createProductCategory);
 router.get("/category/:slug", getSingleProductCategory);
 router.delete("/category/:id", deleteProductCategory);
-router.put("/category/:id", updateProductCategory);
+router.put("/category/:id", productCategoryMulter, updateProductCategory);
+router.patch("/category/:id", updateCategoryStatus);
 router.patch("/category/:id", updateProductCategory);
 
 // export

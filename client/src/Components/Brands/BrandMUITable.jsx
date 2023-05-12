@@ -6,14 +6,18 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Switch from "@mui/material/Switch";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { FaRegEdit } from "react-icons/fa";
 import { HiTrash } from "react-icons/hi";
 import "./Brands.scss";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
-import { deleteBrand, updateBrandStatus } from "../../redux/shop/action";
-import BrandEditModal from "./BrandEditModal";
+import {
+  deleteBrand,
+  editBrand,
+  updateBrandStatus
+} from "../../redux/shop/action";
+import BrandModal from "./BrandModal";
 import { useState } from "react";
 
 function BrandMUITable() {
@@ -22,7 +26,7 @@ function BrandMUITable() {
   const { brands } = useSelector((state) => state.shop);
 
   // handle delete button
-  const handleDeleteBrand = (id) => {
+  const handleDeleteBrand = (id, name) => {
     swal({
       title: "Are you sure?",
       text: "",
@@ -32,7 +36,7 @@ function BrandMUITable() {
     }).then((willDelete) => {
       if (willDelete) {
         dispatch(deleteBrand(id));
-        swal("Brand Deleted", {
+        swal(`${name} Deleted`, {
           icon: "success"
         });
       }
@@ -44,20 +48,84 @@ function BrandMUITable() {
     dispatch(updateBrandStatus({ id, status: !status }));
   };
 
-  const [editModal, setEditModal] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const [name, setName] = useState("");
+  const [logo, setLogo] = useState("");
+  const [Id, setId] = useState();
+
+  const [prevImg, setPrevImg] = useState("");
+
 
   // handle edit modal
   const handleEdit = (id) => {
-    BrandEditModal(id, ("", "", setEditModal(true)));
+    setModal(true);
+    const singleEditData = brands.find((item) => item._id === id);
+    setName(singleEditData.name);
+    setLogo(singleEditData.photo);
+
+    setId(id);
   };
+
+  // handle Edit Brand
+  const handleEditBrand = (e) => {
+    e.preventDefault();
+
+    const form_data = new FormData();
+    form_data.append("name", name);
+    form_data.append("brand-photo", logo);
+
+    dispatch(editBrand({ Id, data: form_data, setName, setLogo, setModal, setPrevImg }));
+  };
+
+
+  // handle photo
+  const handlePhoto = (e) => {
+    const pic = e.target.files[0]
+    setLogo(pic)
+    const prevImg = URL.createObjectURL(pic)
+    setPrevImg(prevImg)
+  }
+
 
   return (
     <>
-      <BrandEditModal
-        show={editModal}
-        onHide={() => setEditModal(false)}
-        setEditModal={setEditModal}
-      />
+      <BrandModal show={modal} onHide={setModal} title="Edit Brand">
+        <Form onSubmit={handleEditBrand}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Logo</Form.Label>
+            <Form.Control
+              onChange={handlePhoto}
+              type="file"
+            />
+            {prevImg && (
+              <img
+                style={{
+                  maxWidth: "100%",
+                  marginTop: "20px",
+                  borderRadius: "6px",
+                  textAlign: "center"
+                }}
+                src={prevImg}
+                alt=""
+              />
+            )}
+          </Form.Group>
+          <Form.Group className="text-end">
+            <Button type="submit" variant="primary">
+              Update
+            </Button>
+          </Form.Group>
+        </Form>
+      </BrandModal>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -113,7 +181,7 @@ function BrandMUITable() {
                     </Button>
 
                     <Button
-                      onClick={() => handleDeleteBrand(_id)}
+                      onClick={() => handleDeleteBrand(_id, name)}
                       className="btn-sm"
                       variant="danger"
                     >

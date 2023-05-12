@@ -8,7 +8,7 @@ export const getAllProductCategory = async (req, res, next) => {
     const data = await Category.find();
     res.status(200).json({
       categories: data,
-      message: "get all data success",
+      message: "get all data success"
     });
   } catch (error) {
     next(error);
@@ -21,12 +21,12 @@ export const createProductCategory = async (req, res, next) => {
     const { name } = req.body;
     const data = await Category.create({
       name,
-      slug : createSlug(name),
-      photo: req.file.filename,
+      slug: createSlug(name),
+      photo: req.file.filename
     });
     res.status(200).json({
       category: data,
-      message: "Category added successful",
+      message: "Category added successful"
     });
   } catch (error) {
     next(error);
@@ -40,7 +40,7 @@ export const getSingleProductCategory = async (req, res, next) => {
     const data = await Category.findOne({ slug });
     res.status(200).json({
       category: data,
-      message: "Single Category Success",
+      message: "Single Category Success"
     });
   } catch (error) {
     next(createError("Category not found", 404));
@@ -53,8 +53,8 @@ export const deleteProductCategory = async (req, res, next) => {
     const { id } = req.params;
     const data = await Category.findByIdAndDelete(id);
     res.status(200).json({
-      deleted_item : data,
-      message: "Category Delete Success",
+      deleted_item: data,
+      message: "Category Delete Success"
     });
   } catch (error) {
     next(error);
@@ -65,15 +65,40 @@ export const deleteProductCategory = async (req, res, next) => {
 export const updateProductCategory = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, slug } = req.body;
+    const { name, photo } = req.body;
     const data = await Category.findByIdAndUpdate(
       id,
-      { name, slug },
+      { name, 
+        slug: createSlug(name), 
+        photo: req.file ? req.file.filename : photo },
       { new: true }
     );
     res.status(200).json({
       category: data,
-      message: "Category updated Success",
+      message: "Category updated Success"
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// status update
+export const updateCategoryStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const upsSatus = await Category.findByIdAndUpdate(
+      id,
+      {
+        status
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      updatedStatus: upsSatus,
+      message: "status successfully updated"
     });
   } catch (error) {
     next(error);
